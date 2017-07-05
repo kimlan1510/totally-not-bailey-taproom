@@ -12,8 +12,11 @@ import { Component } from '@angular/core';
       <span [class]="costColor(currentKeg)">$ {{currentKeg.price}}</span>,
       <span [class]="alcoholColor(currentKeg)">{{currentKeg.alcoholContent}}%</span>
       <button (click)="editKeg(currentKeg)">Edit!</button>
-      <button (click)="checkIfFull(decrementKeg16oz(currentKeg))">Have a drink! 16oz</button>
-      <button (click)="checkIfFull(decrementKeg8oz(currentKeg))">Have a drink! 8oz</button> <br />Take some home: <button (click)="checkIfFull(order64ozGrowler(currentKeg))">Full Growler</button> <button (click)="order32ozGrowler(currentKeg)">Half Growler</button>
+      <button (click)="refillKeg(currentKeg)">Refill!</button>
+      <button (click)="checkIfFull(16, currentKeg)">Have a drink! 16oz</button>
+      <button (click)="checkIfFull(8, currentKeg)">Have a drink! 8oz</button> <br />Take some home:
+      <button (click)="checkIfFull(64, currentKeg)">Full Growler</button>
+      <button (click)="checkIfFull(32, currentKeg)">Half Growler</button>
       </li>
     </ul>
     <hr>
@@ -87,31 +90,52 @@ export class AppComponent {
     this.addKeg = true;
   }
 
-  checkIfFull(serveFunction){
-    if(serveFunction <= 0){
-      alert("Keg is empty");
+  refillKeg(clickedKeg){
+    if(clickedKeg.fullness === 1984){
+      console.log("This keg is still full.");
     }
-    // else{
-    //   if(ozRemoved === 16){
-    //     decrementKeg16oz()
-    //   }
-    // }
+    else{
+      clickedKeg.fullness = 1984;
+    }
   }
 
-  decrementKeg16oz(clickedKeg){
+  checkIfFull(serving, selectedKeg){
+    if(selectedKeg.fullness === 0){
+      console.log("This keg is empty!")
+    }
+    else if((selectedKeg.fullness - serving) < 0){
+      console.log("Order a smaller size");
+    }
+    else{
+      if(serving === 16){
+        this.orderKeg16oz(selectedKeg)
+      }
+      else if(serving === 8){
+        this.orderKeg8oz(selectedKeg)
+      }
+      else if(serving === 64){
+        this.orderKeg64oz(selectedKeg)
+      }
+      else{
+        this.orderKeg32oz(selectedKeg)
+      }
+    }
+  }
+
+  orderKeg16oz(clickedKeg){
     // this.selectedKeg = clickedKeg;
     return clickedKeg.fullness -= 16;
   }
 
-  decrementKeg8oz(clickedKeg){
+  orderKeg8oz(clickedKeg){
     // this.selectedKeg = clickedKeg;
     return clickedKeg.fullness -= 8;
   }
-  order64ozGrowler(clickedKeg){
+  orderKeg64oz(clickedKeg){
     // this.selectedKeg = clickedKeg;
     return clickedKeg.fullness -= 64;
   }
-  order32ozGrowler(clickedKeg){
+  orderKeg32oz(clickedKeg){
     // this.selectedKeg = clickedKeg;
     return clickedKeg.fullness -= 32;
   }
@@ -120,7 +144,7 @@ export class AppComponent {
     if(clickedKeg.fullness >= 1485) {
       return "full";
     }
-    else if(clickedKeg.fullness <= 1300){
+    else if(clickedKeg.fullness <= 160){
       return "almostEmpty";
     }
     else {
