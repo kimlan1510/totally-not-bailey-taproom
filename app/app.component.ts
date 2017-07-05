@@ -4,10 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
   <div class="container">
-    <h1>Tap List for {{month}}/{{day}}/{{year}}</h1>
+    <h1>Tap List for {{month}}/{{day}}/{{year}}/</h1>
     <h3>{{currentFocus}}</h3>
     <ul>
-      <li *ngFor="let currentKeg of kegs">{{currentKeg.name}},
+      <li *ngFor="let currentKeg of kegs">{{currentKeg.name}}, {{currentKeg.branch}},
       <span [class]="isFull(currentKeg)">{{currentKeg.fullness}} oz</span>,
       <span [class]="costColor(currentKeg)">$ {{currentKeg.price}}</span>,
       <span [class]="alcoholColor(currentKeg)">{{currentKeg.alcoholContent}}%</span>
@@ -40,6 +40,9 @@ import { Component } from '@angular/core';
       <button (click)="finishedEditing()">Done</button>
       <hr>
     </div>
+    <div>
+      <button type="button" (click)="setHappyHour()">Happy Hour Pricing</button>
+    </div>
     <button (click)="addKegForm()">Add a new Keg</button>
     <div *ngIf="addKeg">
       <form>
@@ -52,7 +55,7 @@ import { Component } from '@angular/core';
         <input #newKegAlContent>
         <label>Enter Price</label>
         <input #newKegPrice>
-        <button (click)="addNewKeg(newKegName.value, newKegBranch.value, newKegAlContent.value, newKegPrice.value)">Add Keg</button>
+        <button type="button" (click)="addNewKeg(newKegName.value, newKegBranch.value, newKegAlContent.value, newKegPrice.value)">Add Keg</button>
       </form>
     </div>
 
@@ -66,16 +69,35 @@ export class AppComponent {
   month: number = this.currentTime.getMonth() + 1;
   day: number = this.currentTime.getDate();
   year: number = this.currentTime.getFullYear();
+  second: number = this.currentTime.getSeconds();
   kegs: Keg[] = [
-    new Keg('Red Saigon', 'SABECO', 4.5, 2)
+    new Keg('Red Saigon', 'SABECO', 4.5, 2),
+    new Keg('The Incredible IIPA', 'Block 15', 11.5, 6),
+    new Keg('Double Trouble', 'Founders', 9.6, 5),
+    new Keg('Los Locos', 'Epic', 4.7, 5),
+    new Keg('Lil Sumpin', 'Lagunitas', 8.6, 5)
   ];
   addKeg: boolean = false;
   selectedKeg: Keg = null;
 
 
   addNewKeg(kegName: string, kegBranch: string, kegAlcoholContent: number, kegPrice: number){
-
     this.kegs.push(new Keg(kegName, kegBranch, kegAlcoholContent, kegPrice));
+    this.addKeg = false;
+  }
+
+
+  setHappyHour(){
+    for(let keg of this.kegs) {
+      if (keg.happyHour === false){
+        keg.happyHour = true;
+        keg.price = keg.price - 1;
+      }
+      else {
+        keg.happyHour = false;
+        keg.price += 1;
+      }
+    };
   }
 
   editKeg(clickedKeg) {
@@ -178,5 +200,6 @@ export class AppComponent {
 
 export class Keg {
   public fullness: number = 1984;
+  public happyHour: boolean = false;
   constructor(public name: string, public branch: string, public alcoholContent: number, public price: number) { }
 }
