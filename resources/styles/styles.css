@@ -19,6 +19,18 @@ h1{
   color: yellow;
 }
 
+.overprice{
+  color: purple;
+}
+
+.underprice{
+  color: #5EFFA6;
+}
+
+.soso{
+  color: #E5D8FF;
+}
+
 .full{
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,fff7f7+100 */
 background: #000000; /* Old browsers */

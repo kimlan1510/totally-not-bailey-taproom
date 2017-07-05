@@ -7,15 +7,17 @@ import { Component } from '@angular/core';
     <h1>Tap List for {{month}}/{{day}}/{{year}}</h1>
     <h3>{{currentFocus}}</h3>
     <ul>
-      <li *ngFor="let currentKeg of kegs">{{currentKeg.name}}, <span [class]="isFull(currentKeg)">{{currentKeg.fullness}} oz</span>, <span [class]="alcoholColor(currentKeg)">{{currentKeg.alcoholContent}}</span>
+      <li *ngFor="let currentKeg of kegs">{{currentKeg.name}},
+      <span [class]="isFull(currentKeg)">{{currentKeg.fullness}} oz</span>,
+      <span [class]="costColor(currentKeg)">$ {{currentKeg.price}}</span>,
+      <span [class]="alcoholColor(currentKeg)">{{currentKeg.alcoholContent}}%</span>
       <button (click)="editKeg(currentKeg)">Edit!</button>
-      <button (click)="decrementKeg16oz(currentKeg)">Have a drink! 16oz</button>
-      <button (click)="decrementKeg8oz(currentKeg)">Have a drink! 8oz</button>
-
+      <button (click)="checkIfFull(decrementKeg16oz(currentKeg))">Have a drink! 16oz</button>
+      <button (click)="checkIfFull(decrementKeg8oz(currentKeg))">Have a drink! 8oz</button> <br />Take some home: <button (click)="checkIfFull(order64ozGrowler(currentKeg))">Full Growler</button> <button (click)="order32ozGrowler(currentKeg)">Half Growler</button>
       </li>
     </ul>
     <hr>
-    <div>
+    <div *ngIf="selectedKeg">
       <h3>{{selectedKeg.name}}</h3>
       <h3>{{selectedKeg.branch}}</h3>
       <h3>{{selectedKeg.alcoholContent}}</h3>
@@ -32,8 +34,11 @@ import { Component } from '@angular/core';
       <input [(ngModel)]="selectedKeg.alcoholContent">
       <label>Enter Price</label>
       <input [(ngModel)]="selectedKeg.price">
+      <button (click)="finishedEditing()">Done</button>
+      <hr>
     </div>
-    <div>
+    <button (click)="addKegForm()">Add a new Keg</button>
+    <div *ngIf="addKeg">
       <form>
         <h3> Add a new Keg</h3>
         <label>Enter Keg Name:</label>
@@ -61,9 +66,9 @@ export class AppComponent {
   kegs: Keg[] = [
     new Keg('Red Saigon', 'SABECO', 4.5, 2)
   ];
-  selectedKeg: Keg = this.kegs[0];
+  addKeg: boolean = false;
+  selectedKeg: Keg = null;
 
-  // newKeg: Keg = new Keg('Red Saigon', 'SABECO', 4.5, 2);
 
   addNewKeg(kegName: string, kegBranch: string, kegAlcoholContent: number, kegPrice: number){
 
@@ -74,14 +79,41 @@ export class AppComponent {
     this.selectedKeg = clickedKeg;
   }
 
+  finishedEditing(){
+    this.selectedKeg = null;
+  }
+
+  addKegForm(){
+    this.addKeg = true;
+  }
+
+  checkIfFull(serveFunction){
+    if(serveFunction <= 0){
+      alert("Keg is empty");
+    }
+    // else{
+    //   if(ozRemoved === 16){
+    //     decrementKeg16oz()
+    //   }
+    // }
+  }
+
   decrementKeg16oz(clickedKeg){
-    this.selectedKeg = clickedKeg;
-    clickedKeg.fullness -= 16;
+    // this.selectedKeg = clickedKeg;
+    return clickedKeg.fullness -= 16;
   }
 
   decrementKeg8oz(clickedKeg){
-    this.selectedKeg = clickedKeg;
-    clickedKeg.fullness -= 8;
+    // this.selectedKeg = clickedKeg;
+    return clickedKeg.fullness -= 8;
+  }
+  order64ozGrowler(clickedKeg){
+    // this.selectedKeg = clickedKeg;
+    return clickedKeg.fullness -= 64;
+  }
+  order32ozGrowler(clickedKeg){
+    // this.selectedKeg = clickedKeg;
+    return clickedKeg.fullness -= 32;
   }
 
   isFull(clickedKeg: Keg) {
@@ -103,6 +135,18 @@ export class AppComponent {
       return "textGreen";
     } else {
       return "textYellow";
+    }
+  }
+
+  costColor(clickedKeg){
+    if(clickedKeg.price >= 8){
+      return "overprice";
+    }
+    else if(clickedKeg.price <= 4){
+      return "underprice";
+    }
+    else{
+      return "soso";
     }
   }
 
