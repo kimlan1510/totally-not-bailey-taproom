@@ -45,5 +45,13 @@
   },
   "main": "gulpfile.js",
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrapeSalad/Totally-Not-Baileys.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GrapeSalad/Totally-Not-Baileys/issues"
+  },
+  "homepage": "https://github.com/GrapeSalad/Totally-Not-Baileys#readme",
   "description": ""
 }

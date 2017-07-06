@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Keg } from './keg.model';
 @Component({
   selector: 'app-root',
   template: `
@@ -20,44 +20,12 @@ import { Component } from '@angular/core';
       </li>
     </ul>
     <hr>
-    <div *ngIf="selectedKeg">
-      <h3>{{selectedKeg.name}}</h3>
-      <h3>{{selectedKeg.branch}}</h3>
-      <h3>{{selectedKeg.alcoholContent}}</h3>
-      <h3>{{selectedKeg.price}}</h3>
-      <p>
-        Is it full? {{selectedKeg.fullness}}
-      </p>
-      <h3>Edit Keg</h3>
-      <label>Enter Keg Name:</label>
-      <input [(ngModel)]="selectedKeg.name">
-      <label>Enter Branch</label>
-      <input [(ngModel)]="selectedKeg.branch">
-      <label>Enter Alcohol Content</label>
-      <input [(ngModel)]="selectedKeg.alcoholContent">
-      <label>Enter Price</label>
-      <input [(ngModel)]="selectedKeg.price">
-      <button (click)="finishedEditing()">Done</button>
-      <hr>
-    </div>
+    <edit-keg [childSelectedKeg] = "masterSelectedKeg" (finishedEditingSender) = "finishedEditing()"></edit-keg>
     <div>
       <button type="button" (click)="setHappyHour()">Happy Hour Pricing</button>
     </div>
-    <button (click)="addKegForm()">Add a new Keg</button>
-    <div *ngIf="addKeg">
-      <form>
-        <h3> Add a new Keg</h3>
-        <label>Enter Keg Name:</label>
-        <input #newKegName>
-        <label>Enter Branch</label>
-        <input #newKegBranch>
-        <label>Enter Alcohol Content</label>
-        <input #newKegAlContent>
-        <label>Enter Price</label>
-        <input #newKegPrice>
-        <button type="button" (click)="addNewKeg(newKegName.value, newKegBranch.value, newKegAlContent.value, newKegPrice.value)">Add Keg</button>
-      </form>
-    </div>
+
+    <new-keg (newKegSender)="addNewKeg($event)"></new-keg>
 
   </div>
   `
@@ -77,14 +45,8 @@ export class AppComponent {
     new Keg('Los Locos', 'Epic', 4.7, 5),
     new Keg('Lil Sumpin', 'Lagunitas', 8.6, 5)
   ];
-  addKeg: boolean = false;
-  selectedKeg: Keg = null;
 
-
-  addNewKeg(kegName: string, kegBranch: string, kegAlcoholContent: number, kegPrice: number){
-    this.kegs.push(new Keg(kegName, kegBranch, kegAlcoholContent, kegPrice));
-    this.addKeg = false;
-  }
+  masterSelectedKeg: Keg = null;
 
 
   setHappyHour(){
@@ -100,17 +62,21 @@ export class AppComponent {
     };
   }
 
+  addNewKeg(newKegFromChild: Keg){
+    this.kegs.push(newKegFromChild);
+  }
+
   editKeg(clickedKeg) {
-    this.selectedKeg = clickedKeg;
+    this.masterSelectedKeg = clickedKeg;
   }
 
   finishedEditing(){
-    this.selectedKeg = null;
+    this.masterSelectedKeg = null;
   }
 
-  addKegForm(){
-    this.addKeg = true;
-  }
+  // addKegForm(){
+  //   this.addKeg = true;
+  // }
 
   refillKeg(clickedKeg){
     if(clickedKeg.fullness === 1984){
@@ -196,10 +162,4 @@ export class AppComponent {
     }
   }
 
-}
-
-export class Keg {
-  public fullness: number = 1984;
-  public happyHour: boolean = false;
-  constructor(public name: string, public branch: string, public alcoholContent: number, public price: number) { }
 }
