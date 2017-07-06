@@ -13,14 +13,22 @@ import { Keg } from './keg.model';
         Is it full? {{childSelectedKeg.fullness}}
       </p>
       <h3>Edit Keg</h3>
-      <label>Enter Keg Name:</label>
+      <label>Change Keg Name:</label>
       <input [(ngModel)]="childSelectedKeg.name">
-      <label>Enter Branch</label>
+      <label>Change Branch</label>
       <input [(ngModel)]="childSelectedKeg.branch">
-      <label>Enter Alcohol Content</label>
+      <label>Change Alcohol Content</label>
       <input [(ngModel)]="childSelectedKeg.alcoholContent">
-      <label>Enter Price</label>
+      <label>Change Price</label>
       <input [(ngModel)]="childSelectedKeg.price">
+      <select [(ngModel)]="childSelectedKeg.style">
+        <option> IPA </option>
+        <option> Lager </option>
+        <option> Ale </option>
+        <option> Belgian </option>
+        <option> Sour </option>
+        <option> Saison </option>
+      </select>
       <button (click)="buttonFinishedEditing()">Done</button>
       <hr>
     </div>
