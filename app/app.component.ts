@@ -4,18 +4,17 @@ import { Keg } from './keg.model';
   selector: 'app-root',
   template: `
   <div class="container">
-    <h1>Tap List for {{month}}/{{day}}/{{year}}/</h1>
-    <h3>{{currentFocus}}</h3>
-    <keg-list [childKegList] = "masterKegList" (clickSender)="editKeg($event)"></keg-list>
+    <div class="jumbotron">
+      <h3>{{currentFocus}}</h3>
+      <h1>Tap List for {{month}}/{{day}}/{{year}}</h1>
+    </div>
     <hr>
     <edit-keg [childSelectedKeg] = "masterSelectedKeg" (finishedEditingSender)="finishedEditing()"></edit-keg>
-
-    <div>
-      <button type="button" (click)="setHappyHour()">Happy Hour Pricing</button>
-    </div>
-
     <new-keg (newKegSender)="addNewKeg($event)"></new-keg>
-
+    <div id="happyHour">
+    <button type="button" (click)="setHappyHour()">Happy Hour Pricing</button>
+    </div>
+    <keg-list [childKegList] = "masterKegList" (clickSender)="editKeg($event)"></keg-list>
   </div>
   `
 })
@@ -32,6 +31,11 @@ export class AppComponent {
     new Keg('The Incredible IIPA', 'Block 15', 11.5, 6, 'IPA'),
     new Keg('Double Trouble', 'Founders', 9.6, 5, 'IPA'),
     new Keg('Los Locos', 'Epic', 4.7, 5, 'Lager'),
+    new Keg('PBR', 'Blue Ribbon', 4.7, 2, 'Lager'),
+    new Keg('Sour Zombie', 'Catawba', 6.3, 5, 'Sour'),
+    new Keg('Tsing Tao', 'Tsingtao', 4.8, 3, 'Pilsner'),
+    new Keg('Urban Farmhouse Saison', 'Commons', 5.3, 5, 'Saison'),
+    new Keg('Gandaland Returns', 'Widmer', 6, 5, 'Belgian'),
     new Keg('Lil Sumpin', 'Lagunitas', 8.6, 5, 'Ale')
   ];
 
@@ -61,7 +65,5 @@ export class AppComponent {
   finishedEditing(){
     this.masterSelectedKeg = null;
   }
-
-
 
 }

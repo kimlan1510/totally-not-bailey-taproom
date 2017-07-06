@@ -1,11 +1,36 @@
 body{
-  background: grey;
+  background: #000;
+  color: #fff;
+}
+
+.jumbotron {
+  background: #000;
 }
 
 h1{
   color: blue;
 }
 
+button {
+  background-color: #5096D1;
+}
+
+select {
+  background-color: #5096D1;
+}
+
+li {
+  list-style: none;
+  font-size: 20px;
+}
+
+.beerList {
+  height: 500px;
+}
+
+.columnList {
+  column-count: 2;
+}
 
 .textRed{
   color: red;

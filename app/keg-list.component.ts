@@ -12,22 +12,27 @@ import {Keg} from './keg.model';
     <option value="Belgian">Belgian</option>
     <option value="Sour">Sour</option>
     <option value="Saison">Saison</option>
+    <option value="Pilsner">Pilsner</option>
   </select>
-  <ul>
-    <li *ngFor="let currentKeg of childKegList | style: filterByStyle">{{currentKeg.name}}, {{currentKeg.branch}}, {{currentKeg.style}}
-    <span [class]="isFull(currentKeg)">{{currentKeg.fullness}} oz</span>,
-    <span [class]="costColor(currentKeg)">$ {{currentKeg.price}}</span>,
-    <span [class]="alcoholColor(currentKeg)">{{currentKeg.alcoholContent}}%</span>
+  <div class="row">
+    <div class="beerList">
+      <ul class="columnList">
+        <li *ngFor="let currentKeg of childKegList | style: filterByStyle">{{currentKeg.name}}, {{currentKeg.branch}}, {{currentKeg.style}}
+        <span [class]="isFull(currentKeg)">{{currentKeg.fullness}} oz</span>,
+        <span [class]="costColor(currentKeg)">$ {{currentKeg.price}}</span>,
+        <span [class]="alcoholColor(currentKeg)">{{currentKeg.alcoholContent}}%</span>
 
-    <button (click)="editKegIsClicked(currentKeg)">Edit!</button>
+        <button (click)="editKegIsClicked(currentKeg)">Edit!</button>
 
-    <button (click)="refillKeg(currentKeg)">Refill!</button>
-    <button (click)="checkIfFull(16, currentKeg)">Have a drink! 16oz</button>
-    <button (click)="checkIfFull(8, currentKeg)">Have a drink! 8oz</button> <br />Take some home:
-    <button (click)="checkIfFull(64, currentKeg)">Full Growler</button>
-    <button (click)="checkIfFull(32, currentKeg)">Half Growler</button>
-    </li>
-  </ul>
+        <button (click)="refillKeg(currentKeg)">Refill!</button>
+        <button (click)="checkIfFull(16, currentKeg)">Have a drink! 16oz</button>
+        <button (click)="checkIfFull(8, currentKeg)">Have a drink! 8oz</button> <br />Take some home:
+        <button (click)="checkIfFull(64, currentKeg)">Full Growler</button>
+        <button (click)="checkIfFull(32, currentKeg)">Half Growler</button>
+        </li>
+      </ul>
+    </div>
+  </div>
   `
 })
 

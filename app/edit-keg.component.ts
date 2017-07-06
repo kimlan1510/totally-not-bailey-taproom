@@ -28,6 +28,7 @@ import { Keg } from './keg.model';
         <option> Belgian </option>
         <option> Sour </option>
         <option> Saison </option>
+        <option> Pilsner </option>
       </select>
       <button (click)="buttonFinishedEditing()">Done</button>
       <hr>

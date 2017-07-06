@@ -25,6 +25,7 @@ import { Keg } from './keg.model';
         <option> Belgian </option>
         <option> Sour </option>
         <option> Saison </option>
+        <option> Pilsner </option>
       </select>
       <button type="button" (click)="submitForm(newKegName.value, newKegBranch.value, newKegAlContent.value, newKegPrice.value, newKegStyle.value)">Add Keg</button>
     </form>

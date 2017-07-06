@@ -57,6 +57,14 @@ export class StylePipe implements PipeTransform{
       }
       return output;
     }
+    else if(desiredStyle === "Pilsner"){
+      for(var i=0; i<input.length; i++){
+        if(input[i].style === "Pilsner"){
+          output.push(input[i]);
+        }
+      }
+      return output;
+    }
     else{
       return input;
     }
