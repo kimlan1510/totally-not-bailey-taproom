@@ -19,10 +19,31 @@ select {
   background-color: #5096D1;
 }
 
+#info{
+  color: green;
+}
+
 li {
   list-style: none;
-  font-size: 20px;
+  font-size: 18px;
+  border: 1px solid #A9BFD1;
+  height: 127px;
 }
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    /*width: 800px;
+    height: 250px;*/
+    /*background-color: lightgrey;*/
+}
+
+/*.flex-item {
+    background-color: cornflowerblue;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}*/
 
 .beerList {
   height: 500px;

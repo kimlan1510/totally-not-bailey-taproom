@@ -10,9 +10,17 @@ import { Keg } from './keg.model';
     </div>
     <hr>
     <edit-keg [childSelectedKeg] = "masterSelectedKeg" (finishedEditingSender)="finishedEditing()"></edit-keg>
-    <new-keg (newKegSender)="addNewKeg($event)"></new-keg>
-    <div id="happyHour">
-    <button type="button" (click)="setHappyHour()">Happy Hour Pricing</button>
+    <div class="row">
+      <div class="col-sm-2">
+        <new-keg (newKegSender)="addNewKeg($event)"></new-keg>
+      </div>
+      <div class="col-sm-8">
+      </div>
+      <div class="col-sm-2">
+        <div id="happyHour">
+        <button type="button" (click)="setHappyHour()">Happy Hour Pricing</button>
+        </div>
+      </div>
     </div>
     <keg-list [childKegList] = "masterKegList" (clickSender)="editKeg($event)"></keg-list>
   </div>
